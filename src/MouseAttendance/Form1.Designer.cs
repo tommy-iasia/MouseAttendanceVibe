@@ -6,6 +6,7 @@ partial class Form1
     ///  Required designer variable.
     /// </summary>
     private System.ComponentModel.IContainer components = null;
+    private System.Windows.Forms.ListBox listBoxLogs;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -29,9 +30,16 @@ partial class Form1
     private void InitializeComponent()
     {
         this.components = new System.ComponentModel.Container();
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(800, 450);
-        this.Text = "Form1";
+    this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+    this.ClientSize = new System.Drawing.Size(800, 450);
+    // listBoxLogs
+    this.listBoxLogs = new System.Windows.Forms.ListBox();
+    this.listBoxLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+    this.listBoxLogs.FormattingEnabled = true;
+    this.listBoxLogs.ItemHeight = 15;
+    this.listBoxLogs.Name = "listBoxLogs";
+    this.Controls.Add(this.listBoxLogs);
+    this.Text = "Mouse Attendance";
     }
 
     #endregion

@@ -15,6 +15,6 @@ static class Program
         var detector = new AttendanceDetector();
         var reporter = new AttendanceReporter();
         using var scheduler = new Scheduler(detector, reporter);
-        Application.Run(new Form1());
+        Application.Run(new Form1(reporter));
     }    
 }

@@ -1,0 +1,79 @@
+# .gitignore for .NET projects
+
+# Build Folders
+bin/
+obj/
+
+# Visual Studio specific
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+
+# Visual Studio Code
+.vscode/
+
+# NuGet
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# OS generated
+Thumbs.db
+Desktop.ini
+
+# Rider
+.idea/
+
+# Windows image file caches
+ehthumbs.db
+
+# dotCover
+*.dotCover
+
+# Coverage results
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# Test results
+TestResults/
+
+# MSTest test result files
+*.trx
+
+# NCrunch
+*.ncrunch*
+_**/*/AnalysisReports/*
+
+# Build outputs
+*.exe
+*.dll
+*.pdb
+*.cache
+*.ilk
+*.log
+
+# User-specific files
+*.rsuser
+*.suo
+*.userprefs
+
+# Azure Pipelines
+*/.azure-pipelines/
+
+# temporary files
+*.tmp
+*~
+
+# JetBrains Rider
+.idea/
+
+# Dotnet watch
+dotnet-watch.json

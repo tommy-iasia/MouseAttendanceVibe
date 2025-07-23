@@ -7,7 +7,7 @@ static class Program
 {
     static void Main()
     {
-        Console.WriteLine("Mouse Attendance Console started. Press Ctrl+C to exit.");
+        Logger.Log("Mouse Attendance Console started. Press Ctrl+C to exit.");
         var detector = new AttendanceDetector();
         var reporter = new AttendanceReporter();
         using var scheduler = new Scheduler(detector, reporter);
@@ -15,5 +15,6 @@ static class Program
         var exitEvent = new ManualResetEvent(false);
         Console.CancelKeyPress += (sender, e) => exitEvent.Set();
         exitEvent.WaitOne();
+        Logger.Log("Mouse Attendance Console exiting.");
     }
 }

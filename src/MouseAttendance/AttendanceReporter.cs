@@ -27,6 +27,7 @@ public class AttendanceReporter
                 return;
             _lastStateReported = e.State;
             StateReported?.Invoke(this, new AttendanceEventArgs(e.State, e.Timestamp));
+            Logger.Log($"Reporter: State reported {e.State} at {e.Timestamp:yyyy-MM-dd HH:mm:ss}");
             // Fire-and-forget HTTP reporting
             _ = SendReportAsync(e.State, e.Timestamp);
     }
@@ -45,6 +46,7 @@ public class AttendanceReporter
                 var time = timestamp.ToUniversalTime().ToString("o");
                 var uri = new Uri($"https://us-central1-home-dashboard-7b463.cloudfunctions.net/attendanceAdd?type={type}&time={time}");
                 await _httpClient.GetAsync(uri).ConfigureAwait(false);
+                Logger.Log($"Reporter: Sent HTTP report for {state} at {timestamp:yyyy-MM-dd HH:mm:ss}");
             }
             catch
             {

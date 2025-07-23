@@ -41,6 +41,7 @@ namespace MouseAttendance
                 if (_currentState != State.Working)
                 {
                     _currentState = State.Working;
+                    Logger.Log($"Detector: State changed to {State.Working} at {time:yyyy-MM-dd HH:mm:ss}");
                     StateChanged?.Invoke(this, new AttendanceEventArgs(State.Working, time));
                 }
             }
@@ -50,6 +51,7 @@ namespace MouseAttendance
                 {
                     var idleTimestamp = _lastMoveTime.AddMinutes(10);
                     _currentState = State.Left;
+                    Logger.Log($"Detector: State changed to {State.Left} at {idleTimestamp:yyyy-MM-dd HH:mm:ss}");
                     StateChanged?.Invoke(this, new AttendanceEventArgs(State.Left, idleTimestamp));
                 }
             }

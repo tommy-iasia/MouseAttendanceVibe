@@ -1,28 +1,41 @@
 using System;
 using System.Threading;
-using System.Windows.Forms;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace MouseAttendance
 {
-    public class Scheduler : IDisposable
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct POINT { public int X; public int Y; }
+
+    internal static class NativeMethods
     {
-        private readonly AttendanceDetector _detector;
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(out POINT lpPoint);
+    }
+
+    public class Scheduler : IDisposable
+{
+    private readonly AttendanceDetector _detector;
     private readonly System.Threading.Timer _timer;
 
-        public Scheduler(AttendanceDetector detector, AttendanceReporter reporter)
-        {
-            _detector = detector;
-            reporter.Subscribe(detector);
-            // Trigger immediately, then every minute
-            _timer = new System.Threading.Timer(TickCallback, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
-        }
+    public Scheduler(AttendanceDetector detector, AttendanceReporter reporter)
+    {
+        _detector = detector;
+        reporter.Subscribe(detector);
+        // Trigger immediately, then every minute
+        _timer = new System.Threading.Timer(TickCallback, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+    }
 
-        private void TickCallback(object? state)
-        {
-            var now = DateTime.Now;
-            var pos = Cursor.Position;
-            _detector.Tick(now, pos);
-        }
+    private void TickCallback(object? state)
+    {
+        var now = DateTime.Now;
+    // Get current cursor position via PInvoke
+    NativeMethods.GetCursorPos(out POINT pt);
+        var pos = new Point(pt.X, pt.Y);
+        _detector.Tick(now, pos);
+    }
 
         public void Dispose() => _timer.Dispose();
     }

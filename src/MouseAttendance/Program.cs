@@ -1,20 +1,19 @@
+using System;
+using System.Threading;
+
 namespace MouseAttendance;
 
 static class Program
 {
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
-    [STAThread]
     static void Main()
     {
-        // To customize application configuration such as set high DPI settings or default font,
-        // see https://aka.ms/applicationconfiguration.
-        ApplicationConfiguration.Initialize();
-        // Initialize detector, reporter, and scheduler
+        Console.WriteLine("Mouse Attendance Console started. Press Ctrl+C to exit.");
         var detector = new AttendanceDetector();
         var reporter = new AttendanceReporter();
         using var scheduler = new Scheduler(detector, reporter);
-        Application.Run(new Form1(reporter));
-    }    
+        // Keep running until cancelled
+        var exitEvent = new ManualResetEvent(false);
+        Console.CancelKeyPress += (sender, e) => exitEvent.Set();
+        exitEvent.WaitOne();
+    }
 }

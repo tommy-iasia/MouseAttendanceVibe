@@ -8,8 +8,9 @@ namespace MouseAttendance.Tests
     [TestClass]
     public class AttendanceReporterTests
     {
-        private AttendanceReporter reporter;
-        private List<AttendanceEventArgs> reported;
+    // Initialize with null-forgiving to satisfy non-nullable requirement; actual assignment in Setup
+    private AttendanceReporter reporter = null!;
+    private List<AttendanceEventArgs> reported = null!;
 
         [TestInitialize]
         public void Setup()

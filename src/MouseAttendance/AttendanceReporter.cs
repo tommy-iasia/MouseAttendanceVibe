@@ -2,10 +2,10 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace MouseAttendance
+namespace MouseAttendance;
+    
+public class AttendanceReporter
 {
-    public class AttendanceReporter
-    {
     private State? _lastStateReported = null;
     private static readonly HttpClient _httpClient = new HttpClient();
         public event EventHandler<AttendanceEventArgs>? StateReported;
@@ -34,10 +34,16 @@ namespace MouseAttendance
         {
             try
             {
-                var type = state.ToString().ToLowerInvariant();
+                // Map internal state to HTTP API types
+                var type = state switch
+                {
+                    State.Working => "arrive",
+                    State.Left => "leave",
+                    _ => state.ToString().ToLowerInvariant()
+                };
                 // send in UTC
                 var time = timestamp.ToUniversalTime().ToString("o");
-                var uri = new Uri($"http://myservice.abc/attend?type={type}&time={time}");
+                var uri = new Uri($"https://us-central1-home-dashboard-7b463.cloudfunctions.net/attendanceAdd?type={type}&time={time}");
                 await _httpClient.GetAsync(uri).ConfigureAwait(false);
             }
             catch
@@ -45,5 +51,4 @@ namespace MouseAttendance
                 // ignore failures
             }
         }
-    }
 }
